@@ -1,0 +1,21 @@
+function curry(originalFunction) {
+    var collectedArguments = [];
+
+    function collectArgument(singleArgument) {
+        collectedArguments.push(singleArgument);
+        if (collectedArguments.length === originalFunction.length) {
+            return originalFunction.apply(null, collectedArguments);
+        } else {
+            return collectArgument;
+        }
+    }
+
+    return collectArgument;
+}
+
+const multiply = (a, b, c) => a * b * c;
+const add = (a, b, c, d, e) => a + b + c + d + e;
+
+// відображає результат у терміналі
+console.log(curry(add)(1)(2)(3)(4)(5)); // повинно бути 15,  так, і виявляється
+console.log(curry(multiply)(1)(2)(3));  //  повинно бути 6,  так, і виявляється
